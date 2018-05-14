@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>吃货水平测试</title>
+    <link href="http://cdn.bootcss.com/fullPage.js/2.8.6/jquery.fullPage.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/materialize/0.97.7/css/materialize.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    <div id="container">
+       <div class="section">
+           <div class="wrap">
+               <h3 class="animated bounceInDown">吃货水平测试</h3>
+               <h5 class="animated bounceInDown">Test of Expert eater Fan Level</h5>
+               <div class="img-box mt1">
+                   <img class="test-img" src="img/index.jpg" id ="gxy" onclick = "click()">
+                   <!-- <img class="test-img2" src="img/index.jpg"> -->
+				   <!-- <img class="test-img" src="img/index.jpg" v-if="imgChecked"> -->
+               </div>
+               <p class="ft4 animated flipInX">测一测你到底对美食有多了解</p>
+               <a href="#"><img class="start-img animated bounceIn" src="img/start-btn.jpg"></a>
+               <p></p>
+           </div>
+       </div>
+        <div class="section pt0" v-for="item in list">
+            <div class="wrap">
+                  <!-- <div class="img-box">
+                      <img class="test-img" v-bind:src="randomImg">
+                      <img class="test-img2" v-bind:src="randomImg">
+                  </div> -->
+                  <div class="qus-title">第{{item.qid}}题</div>
+                  <div class="qus">
+                    {{item.question}}
+                    <div>
+                        <img v-bind:src="item.qimg" class="qus-img">
+                    </div>
+                  </div>
+                  <ul class="ans" v-if="item.type==1">
+                      <li class="ans-list clearfix" v-for="(ans,index) in item.answer" v-bind:key="ans" v-on:click="next(ans.aid,item.currentAns)"><div class="fl index">{{ansIndex[index]}}</div><div class="ans-cont">{{ans.content}}</div></li>
+                  </ul>
+                  <div class="ans2 clearfix" v-if="item.type==0">
+                    <div class="fl ans-img" v-for="ans in item.answer">
+                      <img v-bind:src="ans.content" v-on:click="next(ans.aid,item.currentAns)">
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="wrap">
+			<div class="animated bounceInDown">你一共答对{{count}}道题</div>
+			<div class="text">
+              <p>{{end.endText}}</p>
+            </div>
+			<div class="test-img">
+              <img v-bind:src="end.endGif">
+            </div>
+            <a href="index.html">再测一次</a>
+              <!-- <a href="http://www.xxx.com" class="btn-go">再复习一次课件</a> -->
+            </div>
+    </div>
+        
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/fullPage.js/2.8.6/jquery.fullPage.min.js"></script>
+    <script src="http://cdn.bootcss.com/fullPage.js/2.8.6/vendors/jquery.easings.min.js"></script>
+    <script src="http://cdn.bootcss.com/vue/2.0.2/vue.min.js"></script>
+    <script type="text/javascript">
+      var data=[{
+        qid: 1,
+        question: '下图中美食的名字叫做什么?',
+        qimg:'img/1-1.jpg',
+        answer: [{
+            aid: 1,
+            content: '乌云托月'
+        }, {
+            aid: 2,
+            content: '乌云吞月'
+        }, {
+            aid: 3,
+            content: '乌云遮月'
+        }, {
+            aid: 4,
+            content: '紫菜蛋花汤'
+        }],
+        currentAns: 1,
+        type:1
+    }, {
+        qid: 2,
+        question: '请从下面的食材挑选出几个做成一道菜',
+        <!-- qimg:'img/ans1.jpg', -->
+        answer: [{
+            aid: 1,
+            content: 'img/2-1.jpg'
+        }, {
+            aid: 2,
+            content: 'img/2-2.jpg'
+        }, {
+            aid: 3,
+            content: 'img/2-3.jpg'
+        }, {
+            aid: 4,
+            content: 'img/2-4.jpg'
+        }],
+        currentAns: 1,
+        type:0
+    }, {
+        qid: 3,
+        question: '曾艳芬发布首条微博是在1',
+        answer: [{
+            aid: 1,
+            content: '2013年9月5号'
+        }, {
+            aid: 2,
+            content: '2012年9月5号'
+        }, {
+            aid: 3,
+            content: '2013年11月11号'
+        }, {
+            aid: 4,
+            content: '2014年1月8号'
+        }],
+        currentAns: 1,
+        type:1
+    }, {
+        qid: 4,
+        question: '曾艳芬发布首条微博是在1',
+        answer: [{
+            aid: 1,
+            content: '2013年9月5号'
+        }, {
+            aid: 2,
+            content: '2012年9月5号'
+        }, {
+            aid: 3,
+            content: '2013年11月11号'
+        }, {
+            aid: 4,
+            content: '2014年1月8号'
+        }],
+        currentAns: 1,
+        type:1
+    }, {
+        qid: 5,
+        question: '曾艳芬发布首条微博是在1',
+        answer: [{
+            aid: 1,
+            content: '2013年9月5号'
+        }, {
+            aid: 2,
+            content: '2012年9月5号'
+        }, {
+            aid: 3,
+            content: '2013年11月11号'
+        }, {
+            aid: 4,
+            content: '2014年1月8号'
+        }],
+        currentAns: 1,
+        type:1
+    }];
+    </script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>

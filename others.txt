@@ -1,0 +1,8 @@
+js点击事件原图片替换‘钩’图片
+<script type="text/javascript">
+function click(){
+document.getElementById('id').src='b.jpg';
+}
+</script>
+<img src="a.jpg" id="img" onclick="click()"/>
+a.jpg原图片b.jpg‘钩’图片
